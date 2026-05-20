@@ -6,7 +6,13 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export const DeleteTopics = ({ id }: { id: number }) => {
   const handleClick = async () => {
-    await deleteTopicAction(id);
+    if (
+      confirm(
+        "このトピックに関するサマリも全て削除されます。本当に削除しますか？",
+      )
+    ) {
+      await deleteTopicAction(id);
+    }
   };
 
   return (

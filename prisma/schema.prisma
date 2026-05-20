@@ -30,7 +30,7 @@ model Summary {
   userId     String
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   topicId    Int
-  topic      Topic    @relation(fields: [topicId], references: [id])
+  topic      Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
   sourceId   Int
   source     Source   @relation(fields: [sourceId], references: [id])
   createdAt  DateTime @default(now())
