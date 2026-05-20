@@ -1,0 +1,20 @@
+"use server";
+
+import { updateSummary } from "../services/update";
+import { revalidatePath } from "next/cache";
+import { getUserId } from "@/src/lib/utils/get-user-id";
+
+/** お気に入り操作 */
+export const updateSummaryFavoriteAction = async (
+  id: number,
+  favorite: boolean,
+) => {
+  const { userId } = await getUserId();
+  if (!userId) {
+    throw new Error("認証されていません");
+  }
+
+  const updatedSummary = await updateSummary(id, userId, { favorite });
+  revalidatePath("/");
+  return updatedSummary;
+};

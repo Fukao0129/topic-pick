@@ -1,0 +1,4 @@
+{
+  // Tailwind CSS 特有の@ルールを警告しないようにする
+  "css.lint.unknownAtRules": "ignore"
+}

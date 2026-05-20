@@ -1,0 +1,129 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Topic {
+  id        Int      @id @default(autoincrement())
+  name      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  summaries Summary[]
+  createdAt DateTime @default(now())
+}
+
+model Summary {
+  id         Int      @id @default(autoincrement()) 
+  originalID String
+  mainText   String
+  favorite   Boolean  @default(false)
+  url        String
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topicId    Int
+  topic      Topic    @relation(fields: [topicId], references: [id])
+  sourceId   Int
+  source     Source   @relation(fields: [sourceId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model Source {
+  id        Int      @id @default(autoincrement()) 
+  name      String
+  summaries Summary[]
+  users     User[]   @relation("UserSources")
+}
+
+// 以下 認証用 https://authjs.dev/getting-started/adapters/prisma#schema
+model User {
+  id            String          @id @default(cuid())
+  name          String?
+  email         String          @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+
+  summaries     Summary[]
+  topics        Topic[]
+  sources       Source[]        @relation("UserSources")
+  
+  // Optional for WebAuthn support
+  Authenticator Authenticator[]
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([provider, providerAccountId])
+}
+ 
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@id([identifier, token])
+}
+ 
+// Optional for WebAuthn support
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([userId, credentialID])
+}
+
+// model User {
+//   id            Int      @id @default(autoincrement()) 
+//   name          String
+//   email         String   @unique
+//   summaries     Summary[]
+//   topics        Topic[]
+//   createdAt     DateTime @default(now())
+// }

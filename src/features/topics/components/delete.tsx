@@ -1,0 +1,21 @@
+"use client";
+
+import { deleteTopicAction } from "../actions/delete";
+import { Icon } from "@/src/components/ui/icon";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+
+export const DeleteTopics = ({ id }: { id: number }) => {
+  const handleClick = async () => {
+    await deleteTopicAction(id);
+  };
+
+  return (
+    <Icon
+      icon={faTrash}
+      clickable
+      size="small"
+      color="error"
+      onClick={handleClick}
+    />
+  );
+};
