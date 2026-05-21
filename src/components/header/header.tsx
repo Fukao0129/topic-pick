@@ -5,7 +5,7 @@ import { HeaderNav } from "./nav";
 
 export const Header = () => {
   return (
-    <header className="p-4 flex justify-between items-center gap-4">
+    <header className="p-4 grid grid-cols-[1fr_auto] sm:flex sm:justify-between sm:items-center gap-4">
       <Link href="/">
         <Image
           src="/icon.svg"
@@ -15,9 +15,13 @@ export const Header = () => {
         />
       </Link>
 
-      <HeaderNav />
+      <div className="sm:order-last">
+        <HeaderMenu />
+      </div>
 
-      <HeaderMenu />
+      <div className="col-span-2 sm:col-auto">
+        <HeaderNav />
+      </div>
     </header>
   );
 };

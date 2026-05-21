@@ -17,7 +17,7 @@ export const HeaderNav = () => {
   const activeClasses = "bg-foreground text-white";
 
   return (
-    <nav className="bg-white rounded-2xl border-b p-1 border-secondary-subtle flex justify-center items-center shadow-md">
+    <nav className="bg-white rounded-2xl border-b p-1 border-secondary-subtle flex justify-around sm:justify-center items-center shadow-md">
       {headerItems.map((item) => (
         <Link
           key={item.href}
