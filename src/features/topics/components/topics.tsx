@@ -12,7 +12,7 @@ export const Topics = async () => {
   const topics = await getTopics(userId);
 
   return (
-    <Card className="p-6">
+    <Card className="py-3 px-6">
       <ul>
         {topics.length > 0 ? (
           topics.map((topic, index) => (
