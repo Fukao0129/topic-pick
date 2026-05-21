@@ -20,14 +20,12 @@ export const FavoriteSummary = ({
   };
 
   return (
-    <>
-      <Icon
-        icon={faStar}
-        clickable
-        color={isFavorite ? "warning" : "secondary"}
-        size="small"
-        onClick={handleClick}
-      />
-    </>
+    <Icon
+      icon={faStar}
+      clickable
+      color={isFavorite ? "warning" : "secondary"}
+      size="small"
+      onClick={handleClick}
+    />
   );
 };

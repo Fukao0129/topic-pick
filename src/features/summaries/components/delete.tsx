@@ -11,9 +11,5 @@ export const DeleteSummary = ({ id }: { id: number }) => {
     }
   };
 
-  return (
-    <>
-      <Icon icon={faTrash} clickable size="small" onClick={handleClick} />
-    </>
-  );
+  return <Icon icon={faTrash} clickable size="small" onClick={handleClick} />;
 };
