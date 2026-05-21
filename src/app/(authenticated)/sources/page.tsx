@@ -26,7 +26,7 @@ export default async function SourcesPage() {
     <div className="flex flex-col gap-6">
       <Title
         title={PAGE_TITLE}
-        description="要約を生成するニュースの情報源を選択してください。（最低1つ以上）"
+        description="サマリを生成するためのニュースの情報源を選択してください。（最低1つ以上）"
       />
 
       <Card className="p-6">
