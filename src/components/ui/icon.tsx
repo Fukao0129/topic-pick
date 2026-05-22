@@ -28,6 +28,7 @@ const sizeClasses: Record<TextSizeTokens, string> = {
  * @param clickable - クリック可能かどうか
  * @param color - アイコンの色
  * @param size - アイコンのサイズ
+ * @param className - 追加のクラス名
  * @param onClick - クリック時のハンドラ
  */
 export function Icon({
@@ -35,18 +36,20 @@ export function Icon({
   clickable = false,
   color = "secondary",
   size = "default",
+  className = "",
   onClick,
 }: {
   icon: IconProp;
   clickable?: boolean;
   color?: ColorTokens;
   size?: TextSizeTokens;
+  className?: string;
   onClick?: () => void;
 }) {
   return (
     <FontAwesomeIcon
       icon={icon}
-      className={`${clickable ? "cursor-pointer" : ""} ${colorClasses[color]} ${sizeClasses[size]}`}
+      className={`${clickable ? "cursor-pointer" : ""} ${colorClasses[color]} ${sizeClasses[size]} ${className}`}
       tabIndex={clickable ? 0 : -1}
       onClick={onClick}
       onKeyDown={(e) => {
