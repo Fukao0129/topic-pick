@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Text } from "@/src/components/ui/text";
 import { Dayjs } from "@/src/lib/dayjs";
 import { Icon } from "@/src/components/ui/icon";
+import { CalendarPicker } from "./calendar-picker";
 import {
   faChevronLeft,
   faChevronRight,
@@ -29,7 +30,10 @@ export function Pagination({ currentDate }: { currentDate: string }) {
       </Link>
 
       {/** 表示中の日付 */}
-      <Text bold>{Dayjs.tz(currentDate).format("YYYY年M月D日")}</Text>
+      <div className="flex items-center gap-1">
+        <Text bold>{Dayjs.tz(currentDate).format("YYYY年M月D日")}</Text>
+        <CalendarPicker currentDate={currentDate} />
+      </div>
 
       {/** 翌日へのリンク */}
       <Link
