@@ -26,7 +26,7 @@ export function Breadcrumb() {
         <div key={index} className="flex items-baseline gap-1">
           <Icon icon={index === 0 ? faHouse : faAngleRight} size="xs" />
           <Link
-            href={`/${segments.slice(0, index + 1).join("/")}`}
+            href={index === 0 ? "/" : `/${segments.slice(0, index).join("/")}`}
             className="hover:underline"
           >
             {translateMapping[segment] || segment}
