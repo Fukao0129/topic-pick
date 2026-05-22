@@ -9,10 +9,10 @@ export async function fetchQiita(
   topic: { id: number; name: string },
   userId: string,
 ): Promise<SummaryInput[]> {
+  // APIでデータを取得
   const res = await fetch(
     `${SOURCES.QIITA.API_URL}/items?query=${encodeURIComponent(topic.name + " lgtm:>=10")}`,
   );
-
   if (!res.ok) {
     console.error(
       `[Qiita API Error] Topic: ${topic.name}, Status: ${res.status}`,
@@ -21,23 +21,33 @@ export async function fetchQiita(
   }
   const data = await res.json();
 
+  // 既にサマリに使ったことがある記事は除外
   const filteredHits = await filterDuplicate<QiitaResponse>(data, userId, "id");
 
-  const truncatedData = filteredHits?.slice(0, 2) || [];
+  // トークン節約のため絞る
+  const truncatedData = filteredHits?.slice(0, 5) || [];
 
   if (truncatedData.length === 0) {
     console.log(
-      `[Qiita API Info] Topic: ${topic.name}, No new articles found.`,
+      `[Qiita API Info] ${topic.name} の新しい記事は見つかりませんでした。`,
     );
     return [];
   }
 
-  const aiSummary = await aiSummarize(truncatedData, SOURCES.QIITA.ID);
+  // AIに渡すデータを要約に必要な項目のみに絞り込む
+  const aiPayload = truncatedData.map((item) => ({
+    title: item.title,
+    body: item.body,
+  }));
 
+  // AIに要約してもらう
+  const aiSummary = await aiSummarize(aiPayload, SOURCES.QIITA.ID);
   if (!aiSummary || !Array.isArray(aiSummary)) return [];
 
-  return aiSummary.map((item) => ({
-    ...item,
+  return truncatedData.map((item, index) => ({
+    originalID: String(item.id),
+    url: String(item.url),
+    mainText: aiSummary[index] || "",
     userId,
     topicId: topic.id,
     sourceId: SOURCES.QIITA.ID,

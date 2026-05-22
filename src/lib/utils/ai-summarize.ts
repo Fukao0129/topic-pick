@@ -1,6 +1,4 @@
 import { GoogleGenAI } from "@google/genai";
-import type { HNHit } from "@/src/types/hacker-news";
-import type { QiitaResponse } from "@/src/types/qiita";
 import { SOURCES } from "@/src/constants/sources";
 import { qiita } from "@/src/lib/prompts/qiita";
 import { hackerNews } from "@/src/lib/prompts/hacker-news";
@@ -12,12 +10,12 @@ const model = "gemini-3-flash-preview";
  * @param data ニュースのデータ
  * @returns AIが要約したニュースのデータ
  */
-export const aiSummarize = async <T extends HNHit[] | QiitaResponse[]>(
-  data: T,
+export const aiSummarize = async (
+  data: ({ title: string | null } & Record<string, unknown>)[],
   sourceId: number,
-) => {
+): Promise<string[]> => {
   // ソースによってプロンプトを分ける
-  const { sourceName, originalIdKey, mainTextPrompt } = (() => {
+  const { mainTextPrompt } = (() => {
     switch (sourceId) {
       case SOURCES.HACKER_NEWS.ID:
         return hackerNews;
@@ -29,42 +27,47 @@ export const aiSummarize = async <T extends HNHit[] | QiitaResponse[]>(
   })();
 
   const prompt = `
-  以下は${sourceName} APIで取得したニュースの一覧です。
+  以下は外部APIで取得したニュースの一覧です。
   各データを加工してJSON形式で返却してください。
 
   ${JSON.stringify(data)}
 
-  想定されるJSONの型は以下の通りです。
+  想定される出力の型は文字列の配列 ( string[] ) です。
   TypeScriptで使用するので、その前提で組み立ててください。
-    {
-      originalID : string | null
-      mainText : string | null
-      url : string | null
-    }[]
 
-  originalIDは、元データの${originalIdKey}をそのまま返却してください。
-  urlはそのまま返却してください。
-  それぞれ、元データが無ければnullを返却してください。
-
-  mainTextは以下のようにしてください。
+  返却する配列の各要素は、元の配列の順序と対応するように作成してください。
+  要素の文字列の内容は以下のようにしてください。
   ${mainTextPrompt}
 
-  返却するのは上記のJSONのみにしてください。
+  返却するのは上記の配列のみにしてください。
   それ以外のテキストやコメントなどは一切不要です。
-  JSONをMarkdown形式のバッククォートで囲うことも禁止します。
+  Markdown形式のバッククォートで囲うことも禁止します。
 
   
   なお、元データが空配列またはnullなどの場合は、空の配列を返却してください。
   `;
 
+  // トークン数がヤバかったら中断する
+  const MAX_TOKEN_LIMIT = 20;
+  const countResult = await ai.models.countTokens({
+    model,
+    contents: prompt,
+  });
+
+  if (countResult.totalTokens && countResult.totalTokens > MAX_TOKEN_LIMIT) {
+    console.warn(
+      `トークン数が想定を超えているため、APIリクエストを中断しました。(${countResult.totalTokens} > ${MAX_TOKEN_LIMIT})`,
+    );
+    return data.map((item) => `【原文】${item.title}`)
+  }
+
+  // Gemini様お願いします
   const result = await ai.models.generateContent({
     model,
     contents: prompt,
   });
 
-  console.log(result);
-
-  if (!result.text) return [];
+  if (!result.text) return data.map((item) => `【原文】${item.title}`);
 
   return JSON.parse(result.text);
 };
