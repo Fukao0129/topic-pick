@@ -34,7 +34,7 @@ export const aiSummarize = async (
   `;
 
   // トークン数がヤバかったら中断する
-  const MAX_TOKEN_LIMIT = 20000000;
+  const MAX_TOKEN_LIMIT = 50000;
   const countResult = await ai.models.countTokens({
     model,
     contents: prompt,
