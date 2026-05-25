@@ -1,5 +1,5 @@
-import { fetchHackerNews } from "./hacker-news";
-import { fetchQiita } from "./qiita";
+import { fetchHackerNews } from "./hacker-news/fetcher";
+import { fetchQiita } from "./qiita/fetcher";
 import type { SourceFetcher } from "./types";
 import { SOURCES } from "@/src/constants/sources";
 

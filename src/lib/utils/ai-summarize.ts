@@ -1,31 +1,17 @@
 import { GoogleGenAI } from "@google/genai";
-import { SOURCES } from "@/src/constants/sources";
-import { qiita } from "@/src/lib/prompts/qiita";
-import { hackerNews } from "@/src/lib/prompts/hacker-news";
 
 const ai = new GoogleGenAI({});
 const model = "gemini-3-flash-preview";
 
 /** 取得したニュースをAIに要約させる
  * @param data ニュースのデータ
+ * @param promptText 要約の指示内容
  * @returns AIが要約したニュースのデータ
  */
 export const aiSummarize = async (
   data: ({ title: string | null } & Record<string, unknown>)[],
-  sourceId: number,
+  promptText: string,
 ): Promise<string[]> => {
-  // ソースによってプロンプトを分ける
-  const { mainTextPrompt } = (() => {
-    switch (sourceId) {
-      case SOURCES.HACKER_NEWS.ID:
-        return hackerNews;
-      case SOURCES.QIITA.ID:
-        return qiita;
-      default:
-        throw new Error("Unsupported sourceId");
-    }
-  })();
-
   const prompt = `
   以下は外部APIで取得したニュースの一覧です。
   各データを加工してJSON形式で返却してください。
@@ -37,7 +23,7 @@ export const aiSummarize = async (
 
   返却する配列の各要素は、元の配列の順序と対応するように作成してください。
   要素の文字列の内容は以下のようにしてください。
-  ${mainTextPrompt}
+  ${promptText}
 
   返却するのは上記の配列のみにしてください。
   それ以外のテキストやコメントなどは一切不要です。
@@ -48,7 +34,7 @@ export const aiSummarize = async (
   `;
 
   // トークン数がヤバかったら中断する
-  const MAX_TOKEN_LIMIT = 20;
+  const MAX_TOKEN_LIMIT = 20000000;
   const countResult = await ai.models.countTokens({
     model,
     contents: prompt,
@@ -58,7 +44,7 @@ export const aiSummarize = async (
     console.warn(
       `トークン数が想定を超えているため、APIリクエストを中断しました。(${countResult.totalTokens} > ${MAX_TOKEN_LIMIT})`,
     );
-    return data.map((item) => `【原文】${item.title}`)
+    return data.map((item) => `【原文】${item.title}`);
   }
 
   // Gemini様お願いします
