@@ -18,7 +18,12 @@ export const createTopicAction = async (
     return { type: "error", text: "認証されていません" };
   }
 
-  const name = formData.get("topicName") as string;
+  // 型チェック
+  const rawName = formData.get("topicName");
+  if (typeof rawName !== "string") {
+    return { type: "error", text: "不正なリクエストです" };
+  }
+  const name = rawName.trim();
 
   // 最大数チェック
   const topics = await getTopics(userId);

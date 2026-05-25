@@ -20,11 +20,17 @@ export const updateUserSourcesAction = async (
     return { type: "error", text: "認証されていません" };
   }
 
-  const sourceIds = formData.getAll("sourceIds").map(Number);
+  const rawSourceIds = formData.getAll("sourceIds");
+  const sourceIds = rawSourceIds.map(Number);
 
   // バリデーションチェック
   if (sourceIds.length === 0) {
     return { type: "error", text: "最低1つ以上のソースを選択してください" };
+  }
+
+  // 型チェック
+  if (sourceIds.some(Number.isNaN)) {
+    return { type: "error", text: "不正な値が含まれています" };
   }
 
   // DB操作
