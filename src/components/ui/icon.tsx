@@ -10,8 +10,10 @@ const colorClasses: Record<ColorTokens, string> = {
   foreground: "text-foreground",
   secondary: "text-secondary",
   info: "text-info",
+  success: "text-success",
   warning: "text-warning",
   error: "text-danger",
+  white: "text-white",
 };
 
 /** サイズのpropsをTailwaindのクラスに変換する */

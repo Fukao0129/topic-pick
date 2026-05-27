@@ -17,9 +17,9 @@
   --secondary-subtle: #ccc;
   --muted: #e2e8f0;
   --info: #0ea5e9;
-  --success: #10b981;
+  --success: #0c8a60;
   --warning: #f59e0b;
-  --danger: #ef4444;
+  --danger: #e24141;
 }
 
 @theme inline {

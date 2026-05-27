@@ -4,7 +4,6 @@ import { useFormStatus } from "react-dom";
 
 /**
  * チェックボックスコンポーネント
- *
  * @param props - HTML input要素のプロパティ（typeはcheckbox固定なので除く）
  * @param props.label - チェックボックスのラベルテキスト
  */

@@ -16,10 +16,10 @@ export const metadata = {
 export default async function SourcesPage() {
   const userId = await requireAuth();
 
-  /** ソース一覧を取得 */
+  // ソース一覧を取得
   const allSources = await getSources();
 
-  /** 選択中のソースを取得 */
+  // 選択中のソースを取得
   const selectedSources = await getUserSources(userId);
 
   return (

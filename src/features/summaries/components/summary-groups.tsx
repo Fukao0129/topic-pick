@@ -5,6 +5,9 @@ import { Icon } from "@/src/components/ui/icon";
 import type { GroupedSummary } from "../types/summary";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
+/** サマリのグループ表示
+ * @param groupedSummaries グループ化されたサマリデータ
+ */
 export function SummaryGroups({
   groupedSummaries,
 }: {

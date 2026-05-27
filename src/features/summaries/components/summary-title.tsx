@@ -1,6 +1,9 @@
 import { Text } from "@/src/components/ui/text";
 import type { GroupedSummary } from "../types/summary";
 
+/** サマリグループのタイトル部分
+ * @param group グループ化されたサマリデータ
+ */
 export function SummaryTitle({ group }: { group: GroupedSummary }) {
   return (
     <div className="flex items-baseline gap-1">

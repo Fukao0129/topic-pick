@@ -2,6 +2,14 @@
 
 import { Text } from "@/src/components/ui/text";
 
+/** 入力フィールドコンポーネント
+ * @param type inputタグのtype属性
+ * @param className 追加のクラス名
+ * @param label ラベルテキスト
+ * @param errorMessage エラーメッセージ
+ * @param ref 入力フィールドの参照
+ * @param props その他のinputタグ属性
+ */
 export function InputField({
   type = "text",
   className = "",

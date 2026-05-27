@@ -6,8 +6,10 @@ export const COLOR_TOKENS = [
   "foreground",
   "secondary", // 補助テキストカラー
   "info", // 情報
+  "success", // 成功
   "warning", // 警告
   "error", // エラー
+  "white", // 白
 ] as const;
 export type ColorTokens = (typeof COLOR_TOKENS)[number];
 

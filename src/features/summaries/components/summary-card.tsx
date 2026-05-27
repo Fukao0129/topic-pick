@@ -6,6 +6,9 @@ import { DeleteSummary } from "../components/delete";
 import { FavoriteSummary } from "../components/favorite";
 import type { Summary } from "../types/summary";
 
+/** サマリカード
+ * @param summary サマリデータ
+ */
 export function SummaryCard({ summary }: { summary: Summary }) {
   return (
     <Card className="p-4 flex flex-col gap-2">

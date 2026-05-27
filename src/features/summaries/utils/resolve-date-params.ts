@@ -9,14 +9,14 @@ export async function resolveDateParams({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  /** クエリパラメータから日付を取得する */
+  // クエリパラメータから日付を取得する
   const resolvedSearchParams = await searchParams;
   const dateParam =
     typeof resolvedSearchParams.date === "string"
       ? resolvedSearchParams.date
       : undefined;
 
-  /** 形式チェック */
+  // 形式チェック
   const date =
     dateParam && isValidDateParam(dateParam)
       ? dateParam

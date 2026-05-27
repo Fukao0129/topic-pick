@@ -4,7 +4,11 @@ import { updateSummary } from "../services/update";
 import { revalidatePath } from "next/cache";
 import { getUserId } from "@/src/lib/utils/get-user-id";
 
-/** お気に入り操作 */
+/** お気に入り操作
+ * @param id サマリID
+ * @param favorite お気に入り状態
+ * @returns 更新されたサマリ
+ */
 export const updateSummaryFavoriteAction = async (
   id: number,
   favorite: boolean,

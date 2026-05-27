@@ -5,7 +5,11 @@ import { SOURCES } from "@/src/constants/sources";
 import { mainTextPrompt } from "./prompt";
 import type { SummaryInput } from "../types";
 
-/** HackerNews APIから記事を取得し、AIで要約して返す処理 */
+/** HackerNews APIから記事を取得し、AIで要約して返す処理
+ * @param topic トピック情報
+ * @param userId ユーザーID
+ * @returns 要約されたサマリの配列
+ */
 export async function fetchHackerNews(
   topic: { id: number; name: string },
   userId: string,
@@ -21,7 +25,7 @@ export async function fetchHackerNews(
   const data = await res.json();
 
   // 既にサマリに使ったことがある記事は除外
-  const filteredHits = await filterDuplicate<HNHit>(
+  const filteredHits = await filterDuplicate<"objectID", HNHit>(
     data.hits,
     userId,
     "objectID",

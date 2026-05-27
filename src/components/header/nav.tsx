@@ -10,6 +10,7 @@ const headerItems = [
   { href: "/sources", label: "ソース" },
 ];
 
+/** ヘッダーナビゲーションコンポーネント */
 export const HeaderNav = () => {
   // アクティブ状態の判定
   const pathName = usePathname();

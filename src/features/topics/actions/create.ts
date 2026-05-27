@@ -64,5 +64,5 @@ export const createTopicAction = async (
   await createTopic(name, userId);
   revalidatePath("/topics");
 
-  return { type: "success", text: "トピックを作成しました。" };
+  return { type: "success", text: "トピックを追加しました。" };
 };

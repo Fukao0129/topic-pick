@@ -15,8 +15,10 @@ export const metadata = {
 export default async function Home() {
   const userId = await requireAuth();
 
-  /** サマリを取得してトピックごとにグループ化する */
+  // サマリを取得する
   const summaries = await getFavoriteSummaries(userId);
+
+  // 取得したサマリをトピックごとにグループ化する
   const groupedSummaries = groupingSummary(summaries);
 
   return (

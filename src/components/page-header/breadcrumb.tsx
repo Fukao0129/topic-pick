@@ -14,6 +14,7 @@ const translateMapping: Record<string, string> = {
   sources: "ソース",
 };
 
+/** パンくずリストコンポーネント */
 export function Breadcrumb() {
   // URLからパンくずリストを生成
   const pathname = usePathname();

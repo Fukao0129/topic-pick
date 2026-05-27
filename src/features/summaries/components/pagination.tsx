@@ -8,6 +8,9 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
+/** サマリのページネーション
+ * @param currentDate 表示中の日付
+ */
 export function Pagination({ currentDate }: { currentDate: string }) {
   const prevDate = Dayjs.tz(currentDate)
     .subtract(1, "day")

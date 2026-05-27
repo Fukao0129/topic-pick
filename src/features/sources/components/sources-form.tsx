@@ -1,9 +1,9 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { Checkbox } from "@/src/components/ui/checkbox";
 import { Button } from "@/src/components/ui/button";
-import { Text } from "@/src/components/ui/text";
+import { useSnackbar } from "@/src/components/ui/snackbar";
 import { updateUserSourcesAction } from "../actions/update";
 
 type SourceItem = {
@@ -13,7 +13,6 @@ type SourceItem = {
 
 /**
  * ソース設定フォーム
- *
  * @param allSources - 選択可能なすべてのソース
  * @param selectedSources - ユーザーが現在選択しているソース
  */
@@ -25,6 +24,14 @@ export function SourcesForm({
   selectedSources: SourceItem[];
 }) {
   const [state, formAction] = useActionState(updateUserSourcesAction, null);
+  const { showSnackbar } = useSnackbar();
+
+  /** 更新後の処理 */
+  useEffect(() => {
+    if (state) {
+      showSnackbar(state.text, state.type);
+    }
+  }, [state, showSnackbar]);
 
   return (
     <form action={formAction} className="flex flex-col gap-3">
@@ -40,12 +47,6 @@ export function SourcesForm({
           </div>
         ))}
       </div>
-
-      {state && (
-        <Text color={state.type === "success" ? "info" : "error"} size="small">
-          {state.text}
-        </Text>
-      )}
 
       <Button type="submit">設定を保存</Button>
     </form>

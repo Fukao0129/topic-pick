@@ -1,23 +1,12 @@
-export type Summary = {
-  id: number;
-  originalID: string;
-  mainText: string;
-  url: string;
-  favorite: boolean;
-  createdAt: Date;
-  userId: string;
-  topicId: number;
-  sourceId: number;
-  topic: {
-    id: number;
-    name: string;
-  };
-};
+import { Prisma } from "@/prisma/generated/client";
 
+/** サマリ一覧 */
+export type Summary = Prisma.SummaryGetPayload<{
+  include: { topic: true };
+}>;
+
+/** トピックごとにグループ化されたサマリ */
 export type GroupedSummary = {
-  topic: {
-    id: number;
-    name: string;
-  };
+  topic: Pick<Summary["topic"], "id" | "name">;
   summaries: Summary[];
 };

@@ -1,6 +1,11 @@
 import { Text } from "@/src/components/ui/text";
 import { Breadcrumb } from "./breadcrumb";
 
+/** ページタイトルコンポーネント
+ * @param title タイトルテキスト
+ * @param description 説明テキスト
+ * @param className 追加のクラス名
+ */
 export function Title({
   title = "",
   description = "",

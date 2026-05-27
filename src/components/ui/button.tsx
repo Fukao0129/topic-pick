@@ -26,8 +26,10 @@ const variantClasses: Record<
     foreground: "bg-foreground text-white border-transparent hover:opacity-80",
     secondary: "bg-secondary text-white border-transparent hover:opacity-80",
     info: "bg-info text-white border-transparent hover:opacity-80",
+    success: "bg-success text-white border-transparent hover:opacity-80",
     warning: "bg-warning text-white border-transparent hover:opacity-80",
     error: "bg-danger text-white border-transparent hover:opacity-80",
+    white: "bg-white text-foreground border-transparent hover:opacity-80",
   },
   outlined: {
     primary: "bg-white text-primary border-primary hover:bg-primary/10",
@@ -35,11 +37,20 @@ const variantClasses: Record<
       "bg-white text-foreground border-foreground hover:bg-foreground/10",
     secondary: "bg-white text-secondary border-secondary hover:bg-secondary/10",
     info: "bg-white text-info border-info hover:bg-info/10",
+    success: "bg-white text-success border-success hover:bg-success/10",
     warning: "bg-white text-warning border-warning hover:bg-warning/10",
     error: "bg-white text-danger border-danger hover:bg-danger/10",
+    white: "bg-transparent text-white border-white hover:bg-white/10",
   },
 };
 
+/** ボタンコンポーネント
+ * @param type ボタンのtype属性
+ * @param className 追加のクラス名
+ * @param color ボタンの色
+ * @param variant ボタンのバリアント
+ * @param size ボタンのサイズ
+ */
 export function Button({
   type = "button",
   className = "",

@@ -1,7 +1,12 @@
 import prisma from "@/src/lib/prisma";
 import { cache } from "react";
 
-/** サマリ一覧取得 */
+/** サマリ一覧取得
+ * @param startDate 開始日
+ * @param endDate 終了日
+ * @param userId ユーザーID
+ * @returns サマリの配列
+ */
 export const getSummaries = cache(
   async (startDate?: Date, endDate?: Date, userId?: string) => {
     return await prisma.summary.findMany({
@@ -19,7 +24,10 @@ export const getSummaries = cache(
   },
 );
 
-/** お気に入りのサマリを取得 */
+/** お気に入りのサマリを取得
+ * @param userId ユーザーID
+ * @returns お気に入りのサマリの配列
+ */
 export const getFavoriteSummaries = cache(async (userId: string) => {
   const summaries = await prisma.summary.findMany({
     where: {
@@ -33,7 +41,10 @@ export const getFavoriteSummaries = cache(async (userId: string) => {
   return summaries;
 });
 
-/** 既存のサマリのoriginalIDを取得 */
+/** 既存のサマリのoriginalIDを取得
+ * @param userId ユーザーID
+ * @returns 既存のサマリのoriginalIDの配列
+ */
 export const getOriginalIds = cache(async (userId: string) => {
   const summaries = await prisma.summary.findMany({
     select: {

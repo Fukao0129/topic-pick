@@ -15,12 +15,12 @@ export default async function Home({
 }) {
   const userId = await requireAuth();
 
-  /** クエリパラメータから日付を取得する */
+  // クエリパラメータから日付を取得する
   const date = await resolveDateParams({ searchParams });
 
   const { startDate, endDate } = convertDate(date);
 
-  /** サマリを取得してトピックごとにグループ化する */
+  // サマリを取得してトピックごとにグループ化する
   const summaries = await getSummaries(startDate, endDate, userId);
   const groupedSummaries = groupingSummary(summaries);
 
