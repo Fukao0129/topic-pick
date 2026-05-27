@@ -11,6 +11,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 export const DeleteSummary = ({ id }: { id: number }) => {
   const { showSnackbar } = useSnackbar();
 
+  /** 削除ボタンのクリックハンドラ */
   const handleClick = async () => {
     if (confirm("このサマリを削除しますか？")) {
       try {

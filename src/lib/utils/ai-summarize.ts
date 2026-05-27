@@ -48,12 +48,17 @@ export const aiSummarize = async (
   }
 
   // Gemini様お願いします
-  const result = await ai.models.generateContent({
-    model,
-    contents: prompt,
-  });
+  try {
+    const result = await ai.models.generateContent({
+      model,
+      contents: prompt,
+    });
 
-  if (!result.text) return data.map((item) => `【原文】${item.title}`);
+    if (!result.text) return data.map((item) => `【原文】${item.title}`);
 
-  return JSON.parse(result.text);
+    return JSON.parse(result.text);
+  } catch (error) {
+    console.error("Gemini API error:", error);
+    return data.map((item) => `【原文】${item.title}`);
+  }
 };
