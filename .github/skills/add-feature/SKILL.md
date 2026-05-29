@@ -77,7 +77,7 @@ export function Icon({
 
 ```
 
-- React19で変更、追加された要素に注意して作業してください。(useMemoやuseCallbackは不要、 useTransitionやuseOptimisticなどの新機能を積極的に使用してください)
+- React19で変更、追加された要素に注意して作業してください。(useMemoやuseCallbackは原則不要、 useActionStateやuseOptimisticなどの新機能を積極的に使用してください)
 
 ## 実装の進め方
 
