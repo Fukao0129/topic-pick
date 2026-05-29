@@ -30,6 +30,7 @@ export const DeleteSummary = ({ id }: { id: number }) => {
       label="削除"
       onConfirm={handleClick}
     >
+      {/* 削除アイコン */}
       <Icon icon={faTrash} clickable size="small" />
     </ConfirmDialog>
   );
