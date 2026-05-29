@@ -1,6 +1,6 @@
 "use client";
 
-import { Dialog, useDialog } from "@/src/components/ui/dialog"; // useDialogをここでimport
+import { Dialog, useDialog } from "@/src/components/ui/dialog";
 import { Button } from "@/src/components/ui/button";
 import { Text } from "@/src/components/ui/text";
 
