@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Dayjs } from "@/src/lib/dayjs";
 import { Icon } from "@/src/components/ui/icon";
@@ -11,29 +11,13 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
+/** カレンダーコンポーネント
+ * @param currentDate 現在の日付
+ */
 export function CalendarPicker({ currentDate }: { currentDate: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const [viewDate, setViewDate] = useState(() => Dayjs.tz(currentDate));
-  const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-
-  // ツールチップ外のクリック検知
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
 
   /** 開閉処理 */
   const toggleOpen = () => {
@@ -75,7 +59,7 @@ export function CalendarPicker({ currentDate }: { currentDate: string }) {
   const weekDays = ["日", "月", "火", "水", "木", "金", "土"];
 
   return (
-    <div className="relative inline-block" ref={containerRef}>
+    <div className="relative">
       {/** 開閉用アイコン */}
       <Icon
         icon={faCalendarDays}
@@ -84,9 +68,14 @@ export function CalendarPicker({ currentDate }: { currentDate: string }) {
         onClick={toggleOpen}
       />
 
+      {/** オーバーレイ */}
+      {isOpen && (
+        <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
+      )}
+
       {/** カレンダー本体 */}
       {isOpen && (
-        <div className="absolute -translate-x-1/2 mt-2 bg-white rounded-lg shadow-xl border border-secondary-subtle p-4 w-64">
+        <div className="absolute z-20 -translate-x-1/2 mt-2 bg-white rounded-lg shadow-xl border border-secondary-subtle p-4 w-64">
           {/** ヘッダー部分 */}
           <div className="flex justify-between items-center mb-4">
             <button

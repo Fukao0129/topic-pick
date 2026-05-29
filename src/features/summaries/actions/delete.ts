@@ -9,13 +9,23 @@ import { getUserId } from "@/src/lib/utils/get-user-id";
  * @returns 削除されたサマリ
  */
 export const deleteSummaryAction = async (id: number) => {
+  // 認証チェック
   const { userId } = await getUserId();
-
   if (!userId) {
     throw new Error("認証されていません");
   }
 
-  const deletedSummary = await deleteSummary(id, userId);
-  revalidatePath("/");
-  return deletedSummary;
+  // 型チェック
+  if (!Number.isInteger(id) || id <= 0) {
+    throw new Error("無効なサマリIDです");
+  }
+
+  // DB操作
+  try {
+    const deletedSummary = await deleteSummary(id, userId);
+    revalidatePath("/");
+    return deletedSummary;
+  } catch {
+    throw new Error("ServerActions 想定外エラー");
+  }
 };

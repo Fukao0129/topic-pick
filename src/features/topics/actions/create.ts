@@ -25,16 +25,6 @@ export const createTopicAction = async (
   }
   const name = rawName.trim();
 
-  // 最大数チェック
-  const topics = await getTopics(userId);
-  if (topics.length >= TOPIC_MAX) {
-    return {
-      type: "error",
-      text: `トピックは最大${TOPIC_MAX}件までです`,
-      values: name,
-    };
-  }
-
   // バリデーションチェック
   if (!name) {
     return {
@@ -51,6 +41,16 @@ export const createTopicAction = async (
     };
   }
 
+  // 最大数チェック
+  const topics = await getTopics(userId);
+  if (topics.length >= TOPIC_MAX) {
+    return {
+      type: "error",
+      text: `トピックは最大${TOPIC_MAX}件までです`,
+      values: name,
+    };
+  }
+
   // 重複チェック
   if (topics.some((topic) => topic.name === name)) {
     return {
@@ -61,8 +61,11 @@ export const createTopicAction = async (
   }
 
   // DB操作
-  await createTopic(name, userId);
-  revalidatePath("/topics");
-
-  return { type: "success", text: "トピックを追加しました。" };
+  try {
+    await createTopic(name, userId);
+    revalidatePath("/topics");
+    return { type: "success", text: "トピックを追加しました。" };
+  } catch {
+    return { type: "error", text: "ServerActions 想定外エラー" };
+  }
 };

@@ -38,6 +38,22 @@
   --font-noto-sans-jp: var(--font-noto-sans-jp);
 }
 
+@keyframes snackbar-timeout {
+  0%,
+  90% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+}
+
+.animate-snackbar-timeout {
+  animation: snackbar-timeout 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0f172a;

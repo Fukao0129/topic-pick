@@ -8,15 +8,6 @@ import { cache } from "react";
 export const getTopics = cache(async (userId: string) => {
   return await prisma.topic.findMany({
     where: { userId },
-  });
-});
-
-/** トピック詳細取得(未使用)
- * @param id トピックID
- * @returns トピックの詳細
- */
-export const getTopic = cache(async (id: number) => {
-  return await prisma.topic.findUnique({
-    where: { id },
+    orderBy: [{ order: "asc" }, { id: "asc" }],
   });
 });

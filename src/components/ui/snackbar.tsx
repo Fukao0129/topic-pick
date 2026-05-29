@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import { Icon } from "@/src/components/ui/icon";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
@@ -36,9 +30,6 @@ const SnackbarContext = createContext<SnackbarContextValue | undefined>(
   undefined,
 );
 
-/** スナックバーの表示時間（ミリ秒） */
-const SNACKBAR_DURATION = 4000;
-
 /** 種別のpropsをTailwaindのクラスに変換する */
 const bgClasses: Record<SnackbarType, string> = {
   success: "bg-success",
@@ -65,7 +56,8 @@ function Snackbar({
     <div
       role="status"
       aria-live="polite"
-      className={`fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 rounded-lg px-4 py-3 text-sm text-white shadow-lg ${bgClasses[type]}`}
+      className={`fixed bottom-6 left-1/2 z-50 flex items-center gap-3 rounded-lg px-4 py-3 text-sm text-white shadow-lg ${bgClasses[type]} animate-snackbar-timeout`}
+      onAnimationEnd={onClose}
     >
       <span>{message}</span>
       <Icon
@@ -96,13 +88,6 @@ export function SnackbarProvider({ children }: { children: React.ReactNode }) {
   const closeSnackbar = useCallback(() => {
     setSnackbar(null);
   }, []);
-
-  /** 一定時間で非表示にする */
-  useEffect(() => {
-    if (!snackbar) return;
-    const timer = setTimeout(closeSnackbar, SNACKBAR_DURATION);
-    return () => clearTimeout(timer);
-  }, [snackbar, closeSnackbar]);
 
   return (
     <SnackbarContext.Provider value={{ showSnackbar }}>

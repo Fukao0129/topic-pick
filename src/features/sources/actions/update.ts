@@ -16,6 +16,7 @@ export const updateUserSourcesAction = async (
   formData: FormData,
 ): Promise<ActionState> => {
   const { userId } = await getUserId();
+  // 認証チェック
   if (!userId) {
     return { type: "error", text: "認証されていません" };
   }
@@ -29,13 +30,16 @@ export const updateUserSourcesAction = async (
   }
 
   // 型チェック
-  if (sourceIds.some(Number.isNaN)) {
-    return { type: "error", text: "不正な値が含まれています" };
+  if (sourceIds.some((id) => !Number.isInteger(id) || id <= 0)) {
+    return { type: "error", text: "無効なソースIDが含まれています" };
   }
 
   // DB操作
-  await updateUserSources(userId, sourceIds);
-  revalidatePath("/sources");
-
-  return { type: "success", text: "設定を保存しました。" };
+  try {
+    await updateUserSources(userId, sourceIds);
+    revalidatePath("/sources");
+    return { type: "success", text: "設定を保存しました。" };
+  } catch {
+    return { type: "error", text: "ServerActions 想定外エラー" };
+  }
 };

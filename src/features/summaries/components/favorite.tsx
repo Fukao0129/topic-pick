@@ -5,6 +5,7 @@ import { Icon } from "@/src/components/ui/icon";
 import { useSnackbar } from "@/src/components/ui/snackbar";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { startTransition, useOptimistic } from "react";
+import { handleError } from "@/src/lib/utils/handle-error";
 
 /** サマリのお気に入りボタン
  * @param id サマリID
@@ -26,8 +27,9 @@ export const FavoriteSummary = ({
       setOptimisticFavorite(!optimisticFavorite);
       try {
         await updateSummaryFavoriteAction(id, !optimisticFavorite);
-      } catch {
-        showSnackbar("お気に入りの更新に失敗しました", "error");
+      } catch (error) {
+        const message = handleError(error);
+        showSnackbar(message, "error");
       }
     });
   };

@@ -3,6 +3,9 @@ import { GoogleGenAI } from "@google/genai";
 const ai = new GoogleGenAI({});
 const model = "gemini-3-flash-preview";
 
+/** 最大トークン数 */
+const MAX_TOKEN_LIMIT = 50000;
+
 /** 取得したニュースをAIに要約させる
  * @param data ニュースのデータ
  * @param promptText 要約の指示内容
@@ -34,12 +37,10 @@ export const aiSummarize = async (
   `;
 
   // トークン数がヤバかったら中断する
-  const MAX_TOKEN_LIMIT = 50000;
   const countResult = await ai.models.countTokens({
     model,
     contents: prompt,
   });
-
   if (countResult.totalTokens && countResult.totalTokens > MAX_TOKEN_LIMIT) {
     console.warn(
       `トークン数が想定を超えているため、APIリクエストを中断しました。(${countResult.totalTokens} > ${MAX_TOKEN_LIMIT})`,

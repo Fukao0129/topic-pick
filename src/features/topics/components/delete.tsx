@@ -4,6 +4,7 @@ import { deleteTopicAction } from "../actions/delete";
 import { Icon } from "@/src/components/ui/icon";
 import { useSnackbar } from "@/src/components/ui/snackbar";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { handleError } from "@/src/lib/utils/handle-error";
 
 /** トピック削除ボタン */
 export const DeleteTopics = ({ id }: { id: number }) => {
@@ -18,8 +19,9 @@ export const DeleteTopics = ({ id }: { id: number }) => {
       try {
         await deleteTopicAction(id);
         showSnackbar("トピックを削除しました", "success");
-      } catch {
-        showSnackbar("削除に失敗しました", "error");
+      } catch (error) {
+        const message = handleError(error);
+        showSnackbar(message, "error");
       }
     }
   };

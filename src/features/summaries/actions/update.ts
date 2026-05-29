@@ -14,11 +14,22 @@ export const updateSummaryFavoriteAction = async (
   favorite: boolean,
 ) => {
   const { userId } = await getUserId();
+  // 認証チェック
   if (!userId) {
     throw new Error("認証されていません");
   }
 
-  const updatedSummary = await updateSummary(id, userId, { favorite });
-  revalidatePath("/");
-  return updatedSummary;
+  // 型チェック
+  if (!Number.isInteger(id) || id <= 0) {
+    throw new Error("無効なサマリIDです");
+  }
+
+  // DB操作
+  try {
+    const updatedSummary = await updateSummary(id, userId, { favorite });
+    revalidatePath("/");
+    return updatedSummary;
+  } catch {
+    throw new Error("ServerActions 想定外エラー");
+  }
 };

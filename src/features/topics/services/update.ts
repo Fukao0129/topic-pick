@@ -1,15 +1,26 @@
 import prisma from "@/src/lib/prisma";
 
-/** トピック更新
- * @param id トピックID
- * @param name トピック名
- * @returns 更新されたトピック
+/**
+ * トピックの並び順を一括更新する
+ * @param updates { id: number, order: number } の配列
+ * @param userId ユーザーID (認可・安全のため)
  */
-export const updateTopic = async (id: number, name: string) => {
-  const updatedTopic = await prisma.topic.update({
-    where: { id },
-    data: { name },
+export const updateTopicsOrder = async (
+  updates: { id: number; order: number }[],
+  userId: string,
+) => {
+  // 複数レコードを更新するのでトランザクションを張る
+  const transactions = updates.map((update) => {
+    return prisma.topic.update({
+      where: {
+        id: update.id,
+        userId: userId,
+      },
+      data: {
+        order: update.order,
+      },
+    });
   });
 
-  return updatedTopic;
+  await prisma.$transaction(transactions);
 };
