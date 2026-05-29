@@ -1,6 +1,6 @@
 import { aiSummarize } from "@/src/lib/utils/ai-summarize";
 import { filterDuplicate } from "@/src/lib/utils/filter-duplicate";
-import type { ZennFeed } from "@/src/types/zenn";
+import type { ZennFeed, ZennFeedItem } from "@/src/types/zenn";
 import { SOURCES } from "@/src/constants/sources";
 import { mainTextPrompt } from "./prompt";
 import type { SummaryInput } from "../types";
@@ -31,13 +31,13 @@ export async function fetchZenn(
   const xml = await res.text();
 
   // XMLをJSONに変換
-  const parser = new Parser();
+  const parser = new Parser<ZennFeed, ZennFeedItem>();
   const data = await parser.parseString(xml);
 
   console.log(data);
 
   // 既にサマリに使ったことがある記事は除外
-  const filteredHits = await filterDuplicate<"guid", ZennFeed>(
+  const filteredHits = await filterDuplicate<"guid", ZennFeedItem>(
     data.items,
     userId,
     "guid",
