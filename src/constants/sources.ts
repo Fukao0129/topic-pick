@@ -12,6 +12,6 @@ export const SOURCES = {
   ZENN: {
     ID: 3,
     NAME: "Zenn RSS",
-    API_URL: "https://zenn.dev/api",
+    RSS_URL: "https://zenn.dev/topics",
   },
 } as const;

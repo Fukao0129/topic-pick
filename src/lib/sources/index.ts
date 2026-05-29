@@ -1,5 +1,6 @@
 import { fetchHackerNews } from "./hacker-news/fetcher";
 import { fetchQiita } from "./qiita/fetcher";
+import { fetchZenn } from "./zenn/fetcher";
 import type { SourceFetcher } from "./types";
 import { SOURCES } from "@/src/constants/sources";
 
@@ -9,4 +10,5 @@ export type { SummaryInput, SourceFetcher } from "./types";
 export const sourceFetchers: Record<number, SourceFetcher> = {
   [SOURCES.HACKER_NEWS.ID]: fetchHackerNews,
   [SOURCES.QIITA.ID]: fetchQiita,
+  [SOURCES.ZENN.ID]: fetchZenn,
 };
