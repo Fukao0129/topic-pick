@@ -12,16 +12,14 @@ export const LoginBtn = () => {
     redirect("/");
   }
   return (
-    <div>
-      <Button
-        color="secondary"
-        variant="outlined"
-        className="flex items-center gap-1"
-        onClick={() => signIn("github", { redirectTo: "/" })}
-      >
-        <Icon icon={faGithub} size="large" />
-        ログイン
-      </Button>
-    </div>
+    <Button
+      color="secondary"
+      variant="outlined"
+      className="flex items-center gap-1"
+      onClick={() => signIn("github", { redirectTo: "/" })}
+    >
+      <Icon icon={faGithub} size="large" />
+      ログイン
+    </Button>
   );
 };
