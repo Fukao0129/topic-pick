@@ -42,6 +42,21 @@ const variantClasses: Record<
     error: "bg-white text-danger border-danger hover:bg-danger/10",
     white: "bg-transparent text-white border-white hover:bg-white/10",
   },
+  text: {
+    primary:
+      "bg-transparent text-primary border-transparent hover:bg-primary/10",
+    foreground:
+      "bg-transparent text-foreground border-transparent hover:bg-foreground/10",
+    secondary:
+      "bg-transparent text-secondary border-transparent hover:bg-secondary/10",
+    info: "bg-transparent text-info border-transparent hover:bg-info/10",
+    success:
+      "bg-transparent text-success border-transparent hover:bg-success/10",
+    warning:
+      "bg-transparent text-warning border-transparent hover:bg-warning/10",
+    error: "bg-transparent text-danger border-transparent hover:bg-danger/10",
+    white: "bg-transparent text-white border-transparent hover:bg-white/10",
+  },
 };
 
 /** ボタンコンポーネント

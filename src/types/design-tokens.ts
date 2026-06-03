@@ -33,7 +33,7 @@ export const TEXT_ALIGN_TOKENS = [
 export type TextAlignTokens = (typeof TEXT_ALIGN_TOKENS)[number];
 
 // ボタンの種類
-export const BUTTON_VARIANT_TOKENS = ["filled", "outlined"] as const;
+export const BUTTON_VARIANT_TOKENS = ["filled", "outlined", "text"] as const;
 export type ButtonVariantTokens = (typeof BUTTON_VARIANT_TOKENS)[number];
 
 // ボタンのサイズ
