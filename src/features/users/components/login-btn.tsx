@@ -1,23 +1,27 @@
 "use client";
 
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
+import { redirect } from "next/navigation";
+import { Button } from "@/src/components/ui/button";
+import { Icon } from "@/src/components/ui/icon";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 export const LoginBtn = () => {
   const { data: session } = useSession();
   if (session) {
-    return (
-      <>
-        Signed in as {session.user?.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    );
+    redirect("/");
   }
   return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn("github", { redirectTo: "/" })}>
-        Sign in
-      </button>
-    </>
+    <div>
+      <Button
+        color="secondary"
+        variant="outlined"
+        className="flex items-center gap-1"
+        onClick={() => signIn("github", { redirectTo: "/" })}
+      >
+        <Icon icon={faGithub} size="large" />
+        ログイン
+      </Button>
+    </div>
   );
 };
