@@ -70,7 +70,6 @@ body {
 }
 
 /* フォントサイズ調整 */
-@tailwind base;
 @layer base {
   /** ～639px **/
   html {
