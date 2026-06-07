@@ -14,14 +14,12 @@ export const HeaderMenu = () => {
       {session && (
         <Dropdown
           trigger={
-            <>
-              <Image
-                src={session?.user?.image || ""}
-                alt="User"
-                width={24}
-                height={24}
-              />
-            </>
+            <Image
+              src={session?.user?.image || ""}
+              alt="User"
+              width={24}
+              height={24}
+            />
           }
           menu={
             <div>
