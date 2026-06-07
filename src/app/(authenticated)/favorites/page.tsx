@@ -9,7 +9,7 @@ import { requireAuth } from "@/src/lib/utils/require-auth";
 const PAGE_TITLE = "お気に入り";
 
 export const metadata = {
-  title: `${PAGE_TITLE} | ${process.env.APP_NAME}`,
+  title: PAGE_TITLE,
 };
 
 export default async function Home() {

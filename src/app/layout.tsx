@@ -15,7 +15,7 @@ const notoSans = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: process.env.APP_NAME,
+  title: { template: `%s | ${process.env.APP_NAME}`, default: "TopicPick" },
   description: "Get less, understand more!",
 };
 

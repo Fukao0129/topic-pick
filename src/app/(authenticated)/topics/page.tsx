@@ -4,7 +4,7 @@ import { Title } from "@/src/components/page-header/title";
 const PAGE_TITLE = "トピック";
 
 export const metadata = {
-  title: `${PAGE_TITLE} | ${process.env.APP_NAME}`,
+  title: PAGE_TITLE,
 };
 
 export default function TopicsPage() {
