@@ -3,8 +3,7 @@ import prisma from "@/src/lib/prisma";
 import { getTopics } from "@/src/features/topics";
 import { createSummary } from "@/src/features/summaries";
 import { getUserSources } from "@/src/features/sources";
-import { sourceFetchers } from "@/src/lib/sources";
-import type { SourceFetcher } from "@/src/lib/sources";
+import { sourceFetchers, type SourceFetcher } from "@/src/lib/sources";
 
 /** 登録しているトピックごとに全ソースからニュースを取得し、AIで要約を生成してDBに保存する */
 export async function GET(request: Request) {
