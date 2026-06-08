@@ -14,6 +14,7 @@ export const Header = () => {
           alt={process.env.APP_NAME || "TopicPick"}
           width={150}
           height={35}
+          loading="eager"
         />
       </Link>
 
